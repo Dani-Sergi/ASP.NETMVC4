@@ -5,11 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6f4bb87cf1664d2ea67829755d04b575" Name="Diagram1" >
-        <EntityTypeShape EntityType="Model.Application" Width="2" PointX="1.75" PointY="1" />
+        <EntityTypeShape EntityType="Model.Application" Width="2" PointX="0.625" PointY="1.125" />
         <EntityTypeShape EntityType="Model.StatusApplication" Width="1.875" PointX="4.25" PointY="1" />
         <EntityTypeShape EntityType="Model.HistoryChating" Width="2" PointX="6.75" PointY="1" />
-        <EntityTypeShape EntityType="Model.Entity2" Width="2" PointX="1.75" PointY="3.25" />
-        <EntityTypeShape EntityType="Model.Entity3" Width="1.875" PointX="4.25" PointY="3.25" />
         <EntityTypeShape EntityType="Model.Positions" Width="2" PointX="6.75" PointY="3.25" />
       </Diagram>
     </edmx:Diagrams>

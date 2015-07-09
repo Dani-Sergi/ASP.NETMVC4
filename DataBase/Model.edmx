@@ -4,11 +4,47 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="ModelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="ApplicationSet" EntityType="Model.Store.ApplicationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StatusApplicationSet" EntityType="Model.Store.StatusApplicationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistoryChatingSet" EntityType="Model.Store.HistoryChatingSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PositionsSet" EntityType="Model.Store.PositionsSet" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="ApplicationSet">
+    <Key>
+      <PropertyRef Name="IdPerson" />
+    </Key>
+    <Property Name="IdPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fio" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Iotestvo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateBorn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StatusApplicationSet">
+    <Key>
+      <PropertyRef Name="IdStatusApplication" />
+    </Key>
+    <Property Name="IdStatusApplication" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusApp" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistoryChatingSet">
+    <Key>
+      <PropertyRef Name="IdHistoryChating" />
+    </Key>
+    <Property Name="IdHistoryChating" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateChating" Type="datetime" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Application" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PositionsSet">
+    <Key>
+      <PropertyRef Name="IdPosition" />
+    </Key>
+    <Property Name="IdPosition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Position" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -16,8 +52,6 @@
           <EntitySet Name="ApplicationSet" EntityType="Model.Application" />
           <EntitySet Name="StatusApplicationSet" EntityType="Model.StatusApplication" />
           <EntitySet Name="HistoryChatingSet" EntityType="Model.HistoryChating" />
-          <EntitySet Name="Entity2Set" EntityType="Model.Entity2" />
-          <EntitySet Name="Entity3Set" EntityType="Model.Entity3" />
           <EntitySet Name="PositionsSet" EntityType="Model.Positions" />
         </EntityContainer>
         <EntityType Name="Application">
@@ -46,18 +80,6 @@
           <Property Name="Comment" Type="String" Nullable="false" />
           <Property Name="Application" Type="String" Nullable="false" />
         </EntityType>
-        <EntityType Name="Entity2">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="Entity3">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="Positions">
           <Key>
             <PropertyRef Name="IdPosition" />
@@ -69,13 +91,47 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="Model" />
-        <Alias Key="Target" Value="Model.Store" />
-        <EntityContainerMapping CdmEntityContainer="ModelContainer" StorageEntityContainer="ModelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="ApplicationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Application)">
+        <MappingFragment StoreEntitySet="ApplicationSet">
+          <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+          <ScalarProperty Name="Fio" ColumnName="Fio" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Iotestvo" ColumnName="Iotestvo" />
+          <ScalarProperty Name="DateBorn" ColumnName="DateBorn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatusApplicationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.StatusApplication)">
+        <MappingFragment StoreEntitySet="StatusApplicationSet">
+          <ScalarProperty Name="IdStatusApplication" ColumnName="IdStatusApplication" />
+          <ScalarProperty Name="StatusApp" ColumnName="StatusApp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistoryChatingSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.HistoryChating)">
+        <MappingFragment StoreEntitySet="HistoryChatingSet">
+          <ScalarProperty Name="IdHistoryChating" ColumnName="IdHistoryChating" />
+          <ScalarProperty Name="DateChating" ColumnName="DateChating" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Application" ColumnName="Application" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PositionsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Positions)">
+        <MappingFragment StoreEntitySet="PositionsSet">
+          <ScalarProperty Name="IdPosition" ColumnName="IdPosition" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -88,7 +144,8 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
